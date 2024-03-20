@@ -17,7 +17,7 @@ namespace ClickLib.Bases;
 /// <param name="eventData">Event data.</param>
 /// <param name="inputData">Keyboard and mouse data.</param>
 /// <returns>The addon address.</returns>
-internal unsafe delegate IntPtr ReceiveEventDelegate(AtkEventListener* eventListener, EventType evt, uint which, void* eventData, void* inputData);
+public unsafe delegate IntPtr ReceiveEventDelegate(AtkEventListener* eventListener, EventType evt, uint which, void* eventData, void* inputData);
 
 /// <summary>
 /// Click base class.
