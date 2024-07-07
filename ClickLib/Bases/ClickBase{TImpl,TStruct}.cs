@@ -71,7 +71,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
     /// <param name="which">Internal game click routing.</param>
     /// <param name="type">Event type.</param>
     protected void ClickAddonRadioButton(AtkComponentRadioButton* target, uint which, EventType type = EventType.CHANGE)
-        => this.ClickAddonComponent(target->AtkComponentBase.OwnerNode, which, type);
+        => this.ClickAddonComponent(target->OwnerNode, which, type);
 
     /// <summary>
     /// Send a click.
@@ -98,7 +98,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
     /// <param name="type">Event type.</param>
     protected void ClickAddonStage(uint which, EventType type = EventType.MOUSE_CLICK)
     {
-        var target = AtkStage.GetSingleton();
+        var target = AtkStage.Instance();
 
         var eventData = EventData.ForNormalTarget(target, this.UnitBase);
         var inputData = InputData.Empty();
@@ -156,7 +156,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
 
     private ReceiveEventDelegate GetReceiveEvent(AtkEventListener* listener)
     {
-        var receiveEventAddress = new IntPtr(listener->vfunc[2]);
+        var receiveEventAddress = new IntPtr(listener->VirtualTable->ReceiveGlobalEvent);
         return Marshal.GetDelegateForFunctionPointer<ReceiveEventDelegate>(receiveEventAddress)!;
     }
 
